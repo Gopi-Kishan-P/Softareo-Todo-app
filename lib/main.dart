@@ -27,19 +27,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class TodoHomePage extends StatelessWidget {
+class TodoHomePage extends StatefulWidget {
+  @override
+  _TodoHomePageState createState() => _TodoHomePageState();
+}
+
+class _TodoHomePageState extends State<TodoHomePage> {
   final TextEditingController addTaskController = TextEditingController();
+
+  final FocusNode addTaskFocusNode = FocusNode();
 
   final CollectionReference tasks =
       FirebaseFirestore.instance.collection("ToDo Tasks");
+
   void addTask() async {
     if (addTaskController.text.isNotEmpty) {
       await tasks.add({
         "task": addTaskController.text,
-        "completed": false,
+        "isComplete": false,
         "createdAt": DateTime.now(),
       });
       print("Added\n");
+      addTaskController.clear();
+      FocusScope.of(context).requestFocus(new FocusNode());
     }
   }
 
@@ -59,6 +69,7 @@ class TodoHomePage extends StatelessWidget {
               children: [
                 SizedBox(height: 18),
                 TodoAppbar(),
+                SizedBox(height: 18),
                 AddTask(
                   addTask: addTask,
                   addTaskController: addTaskController,

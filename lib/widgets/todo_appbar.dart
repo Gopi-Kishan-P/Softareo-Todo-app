@@ -6,7 +6,7 @@ class TodoAppbar extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 50,
+          width: 70,
         ),
         Expanded(
           child: Container(
@@ -24,7 +24,8 @@ class TodoAppbar extends StatelessWidget {
         IconButton(
           onPressed: () {},
           icon: Icon(Icons.wb_sunny_outlined),
-        )
+        ),
+        SizedBox(width: 20),
       ],
     );
   }
