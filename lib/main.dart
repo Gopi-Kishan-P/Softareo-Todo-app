@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:to_do/widgets/add_task.dart';
+import 'package:to_do/widgets/task_list.dart';
+import 'package:to_do/widgets/todo_appbar.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -20,14 +27,22 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class TodoHomePage extends StatefulWidget {
-  const TodoHomePage({Key? key}) : super(key: key);
+class TodoHomePage extends StatelessWidget {
+  final TextEditingController addTaskController = TextEditingController();
 
-  @override
-  _TodoHomePageState createState() => _TodoHomePageState();
-}
+  final CollectionReference tasks =
+      FirebaseFirestore.instance.collection("ToDo Tasks");
+  void addTask() async {
+    if (addTaskController.text.isNotEmpty) {
+      await tasks.add({
+        "task": addTaskController.text,
+        "completed": false,
+        "createdAt": DateTime.now(),
+      });
+      print("Added\n");
+    }
+  }
 
-class _TodoHomePageState extends State<TodoHomePage> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -42,66 +57,13 @@ class _TodoHomePageState extends State<TodoHomePage> {
           child: Form(
             child: Column(
               children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 50,
-                    ),
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        child: Text(
-                          "TO DO App",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.wb_sunny_outlined),
-                    )
-                  ],
-                ),
                 SizedBox(height: 18),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Card(
-                        margin: EdgeInsets.only(left: 30),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: "Type Something here ...",
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 10),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(10),
-                        primary: Colors.black,
-                      ),
-                    ),
-                    SizedBox(width: 18),
-                  ],
-                )
+                TodoAppbar(),
+                AddTask(
+                  addTask: addTask,
+                  addTaskController: addTaskController,
+                ),
+                TaskListView(),
               ],
             ),
           ),

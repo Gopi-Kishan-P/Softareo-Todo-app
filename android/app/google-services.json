@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "313749546607",
+    "project_id": "softareo-todo-app-assignment",
+    "storage_bucket": "softareo-todo-app-assignment.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313749546607:android:db33116b8442586a37cf9a",
+        "android_client_info": {
+          "package_name": "com.softareo.to_do.assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313749546607-jq03qheibut72a77bnrrlt8qeomqhtnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUDlkylVISCMH1DzajFxJ1WNRHjAuaK14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313749546607-jq03qheibut72a77bnrrlt8qeomqhtnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
