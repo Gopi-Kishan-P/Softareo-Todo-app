@@ -36,9 +36,10 @@ class _TodoListCardState extends State<TodoListCard> {
   Widget build(BuildContext context) {
     document =
         FirebaseFirestore.instance.collection("ToDo Tasks").doc(widget.id);
-    TextEditingController _controller = TextEditingController(text: widget.value);
+    TextEditingController _controller =
+        TextEditingController(text: widget.value);
     isComplete = widget.isComplete;
-    print("Task : " + widget.value + ", Id : " + widget.id);
+    // print("Task : " + widget.value + ", Id : " + widget.id);
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
       elevation: 4,
@@ -62,7 +63,7 @@ class _TodoListCardState extends State<TodoListCard> {
             Expanded(
               child: isEditable
                   ? TextFormField(
-                    controller: _controller,
+                      controller: _controller,
                       enabled: isEditable,
                       focusNode: focusNode,
                       style: TextStyle(fontSize: 18, color: Colors.black),
@@ -88,10 +89,11 @@ class _TodoListCardState extends State<TodoListCard> {
                   setState(() {
                     this.isEditable = !this.isEditable;
                   });
-                }else{
-                  document.update({
-                    "task" : _controller.text
+                } else {
+                  setState(() {
+                    this.isEditable = !this.isEditable;
                   });
+                  document.update({"task": _controller.text});
                 }
               },
               icon: Icon(

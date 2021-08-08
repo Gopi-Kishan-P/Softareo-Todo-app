@@ -36,24 +36,27 @@ class _TaskListViewState extends State<TaskListView> {
         child: StreamBuilder<QuerySnapshot>(
           stream: todoTaskStream,
           builder: (BuildContext ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return (snapshot.connectionState == ConnectionState.waiting ||
-                    !snapshot.hasData)
+            return (snapshot.connectionState == ConnectionState.waiting)
                 ? Center(
                     child: CircularProgressIndicator(
                       color: Colors.black,
                     ),
                   )
-                : ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data = document.data()!;
-                      return TodoListCard(
-                        value: data["task"],
-                        id: document.id,
-                        isComplete: data["isComplete"],
+                : (!snapshot.hasData)
+                    ? Center(
+                        child: Text("No Task"),
+                      )
+                    : ListView(
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data = document.data()!;
+                          return TodoListCard(
+                            value: data["task"],
+                            id: document.id,
+                            isComplete: data["isComplete"],
+                          );
+                        }).toList(),
                       );
-                    }).toList(),
-                  );
           },
         ),
       ),

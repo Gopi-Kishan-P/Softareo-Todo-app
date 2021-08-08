@@ -47,7 +47,7 @@ class _TodoHomePageState extends State<TodoHomePage> {
         "isComplete": false,
         "createdAt": DateTime.now(),
       });
-      print("Added\n");
+      print("**************Added\n");
       addTaskController.clear();
       FocusScope.of(context).requestFocus(new FocusNode());
     }
@@ -67,7 +67,6 @@ class _TodoHomePageState extends State<TodoHomePage> {
           child: Form(
             child: Column(
               children: [
-                SizedBox(height: 18),
                 TodoAppbar(),
                 SizedBox(height: 18),
                 AddTask(
