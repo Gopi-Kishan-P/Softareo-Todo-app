@@ -40,6 +40,7 @@ class _TodoHomePageState extends State<TodoHomePage> {
   final CollectionReference tasks =
       FirebaseFirestore.instance.collection("ToDo Tasks");
 
+
   void addTask() async {
     if (addTaskController.text.isNotEmpty) {
       await tasks.add({
@@ -72,6 +73,7 @@ class _TodoHomePageState extends State<TodoHomePage> {
                 AddTask(
                   addTask: addTask,
                   addTaskController: addTaskController,
+                  addTaskFocusNode: addTaskFocusNode,
                 ),
                 TaskListView(),
               ],

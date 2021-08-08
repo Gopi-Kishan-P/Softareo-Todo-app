@@ -12,18 +12,6 @@ class TaskListView extends StatefulWidget {
 class _TaskListViewState extends State<TaskListView> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  List list = [
-    "111",
-    "222",
-    "333",
-    "444",
-    "555",
-    "111",
-    "222",
-    "333",
-    "444",
-    "555"
-  ];
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> todoTaskStream = firestore
@@ -42,9 +30,12 @@ class _TaskListViewState extends State<TaskListView> {
                       color: Colors.black,
                     ),
                   )
-                : (!snapshot.hasData)
+                : (!snapshot.hasData || snapshot.data!.docs.isEmpty)
                     ? Center(
-                        child: Text("No Task"),
+                        child: Text(
+                          "No Task Added",
+                          style: TextStyle(fontSize: 18),
+                        ),
                       )
                     : ListView(
                         children: snapshot.data!.docs
