@@ -2,6 +2,9 @@
 
 A flutter application that runs on both Android and Web
 
+## Link to Web App
+https://softareo-todo-app-assignment.web.app/#/
+
 ## Features
 
 - Add a TO-DO Task
